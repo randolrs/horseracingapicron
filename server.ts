@@ -16,6 +16,38 @@ app.get('/', (req, res) => {
   res.json({ status: 'Server is running', lastJobRun: getLastRunTime() });
 });
 
+// New route to manually trigger the job
+app.get('/trigger-job', (req, res) => {
+    try {
+      // Check for optional auth token (highly recommended for production)
+      const authToken = req.query.token;
+      const expectedToken = process.env.JOB_SECRET_TOKEN;
+      
+      // Simple authentication
+      if (expectedToken && authToken !== expectedToken) {
+        return res.status(401).json({ error: 'Unauthorized' });
+      }
+      
+      // Run the task
+      const result = dailyTask();
+      
+      // Return success response
+      res.json({ 
+        success: true, 
+        message: 'Job triggered successfully', 
+        timestamp: new Date().toISOString(),
+        result: result
+      });
+    } catch (error) {
+      console.error('Error triggering job:', error);
+      res.status(500).json({ 
+        success: false, 
+        error: 'Failed to trigger job',
+        message: error.message
+      });
+    }
+  });
+
 // Function to perform daily task
 function dailyTask() {
   console.log('Running daily task at:', new Date().toISOString());

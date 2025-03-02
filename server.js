@@ -1,8 +1,8 @@
 // server.js
-import express from 'express';
-import cron from 'node-cron';
-import fs from 'file-system';
-import path from 'path';
+const express = require('express');
+const cron = require('node-cron');
+const fs =  require('file-system');
+const path = require('path');
 
 // Create Express app
 const app = express();
@@ -97,5 +97,5 @@ cron.schedule('0 * * * *', () => {
 // Start server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-  console.log('Cron job scheduled to run daily at midnight');
+  console.log('Cron job scheduled to run hourly at xx:00');
 });

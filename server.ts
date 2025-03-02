@@ -52,8 +52,8 @@ function getLastRunTime() {
   return 'Never';
 }
 
-// Schedule task to run daily at midnight (00:00)
-cron.schedule('0 0 * * *', () => {
+// Schedule task to run hourly at top of the hour (xx:00)
+cron.schedule('0 * * * *', () => {
   try {
     const result = dailyTask();
     console.log('Scheduled task completed successfully:', result);

@@ -52,22 +52,18 @@ app.get('/trigger-job', (req, res) => {
 function dailyTask() {
   console.log('Running daily task at:', new Date().toISOString());
   
-  // Example task: Log to a file
-  const logDir = path.join('/', 'logs');
-  
-  // Create logs directory if it doesn't exist
-  if (!fs.existsSync(logDir)) {
-    fs.mkdirSync(logDir);
-  }
-  
-  const logFile = path.join(logDir, 'daily-task.log');
-  const logEntry = `Task executed at ${new Date().toISOString()}\n`;
-  
-  fs.appendFileSync(logFile, logEntry);
-  
-  // Store last run time
-  fs.writeFileSync(path.join('/', 'last-run.txt'), new Date().toISOString());
-  
+  try {
+      // Perform task here
+
+        // write log to DB
+  } catch($error) {
+    console.error('Error reading last run time:', error);
+
+    // write log to DB
+
+    return false;
+  } 
+
   return true;
 }
 
